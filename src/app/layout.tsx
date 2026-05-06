@@ -39,7 +39,7 @@ function resolveMetadataBase(): URL {
   }
 
   // Prevent localhost fallback in production metadata when env is unset.
-  return new URL('https://mission-control.local')
+  return new URL('https://arvis.local')
 }
 
 const metadataBase = resolveMetadataBase()
@@ -52,34 +52,34 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Mission Control — AI Agent Orchestration Dashboard',
-  description: 'Open-source dashboard for AI agent orchestration. Manage agent fleets, dispatch tasks, track costs, and coordinate multi-agent workflows. Self-hosted, zero dependencies, SQLite-powered.',
+  title: 'Arvis — AI Operations Dashboard | AR MEDIAS',
+  description: 'Arvis by AR MEDIAS. Centralized automation operations dashboard. Manage AI agents, dispatch tasks, track costs, and coordinate multi-agent workflows.',
   metadataBase,
   icons: {
     icon: [
       { url: '/icon.png', type: 'image/png', sizes: '256x256' },
-      { url: '/brand/mc-logo-128.png', type: 'image/png', sizes: '128x128' },
+      { url: '/brand/arvis-logo-128.png', type: 'image/png', sizes: '128x128' },
     ],
     apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
     shortcut: ['/icon.png'],
   },
   openGraph: {
-    title: 'Mission Control — AI Agent Orchestration Dashboard',
-    description: 'Open-source dashboard for AI agent orchestration. Manage agent fleets, dispatch tasks, track costs, and coordinate multi-agent workflows.',
-    images: [{ url: '/brand/mc-logo-512.png', width: 512, height: 512, alt: 'Mission Control — open-source AI agent orchestration dashboard' }],
+    title: 'Arvis — AI Operations Dashboard | AR MEDIAS',
+    description: 'Arvis by AR MEDIAS. Centralized automation operations dashboard. Manage AI agents, dispatch tasks, track costs, and coordinate multi-agent workflows.',
+    images: [{ url: '/brand/arvis-logo-512.png', width: 512, height: 512, alt: 'Arvis — AI Operations Dashboard by AR MEDIAS' }],
     type: 'website',
-    siteName: 'Mission Control',
+    siteName: 'Arvis',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mission Control — AI Agent Orchestration Dashboard',
-    description: 'Open-source dashboard for AI agent orchestration. Manage agent fleets, dispatch tasks, track costs, and coordinate multi-agent workflows.',
-    images: ['/brand/mc-logo-512.png'],
+    title: 'Arvis — AI Operations Dashboard | AR MEDIAS',
+    description: 'Arvis by AR MEDIAS. Centralized automation operations dashboard. Manage AI agents, dispatch tasks, track costs, and coordinate multi-agent workflows.',
+    images: ['/brand/arvis-logo-512.png'],
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Mission Control',
+    title: 'Arvis',
   },
 }
 
@@ -108,7 +108,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="void"
+            defaultTheme="apple"
             themes={THEME_IDS}
             enableSystem={false}
             disableTransitionOnChange

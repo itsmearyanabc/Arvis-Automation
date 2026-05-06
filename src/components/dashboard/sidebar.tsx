@@ -87,16 +87,16 @@ export function Sidebar() {
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 rounded-lg overflow-hidden bg-background border border-border/50 flex items-center justify-center">
             <Image
-              src="/brand/mc-logo-128.png"
-              alt="Mission Control logo"
+              src="/brand/arvis-logo-128.png"
+              alt="Arvis logo"
               width={32}
               height={32}
               className="w-full h-full object-cover"
             />
           </div>
           <div>
-            <h2 className="font-bold text-foreground">Mission Control</h2>
-            <p className="text-xs text-muted-foreground">ClawdBot Orchestration</p>
+            <h2 className="font-bold text-foreground">Arvis</h2>
+            <p className="text-xs text-muted-foreground">AI Operations by AR MEDIAS</p>
           </div>
         </div>
       </div>

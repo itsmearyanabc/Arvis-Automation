@@ -7,6 +7,7 @@ export interface ThemeMeta {
 }
 
 export const THEMES: ThemeMeta[] = [
+  { id: 'apple', label: 'Apple', group: 'light', swatch: '#0066CC', background: 'apple-bg' },
   { id: 'void', label: 'Void', group: 'dark', swatch: '#22D3EE', background: 'void-bg' },
   { id: 'midnight-blue', label: 'Midnight Blue', group: 'dark', swatch: '#3B82F6' },
   { id: 'synthwave', label: 'Synthwave', group: 'dark', swatch: '#F472B6', background: 'synthwave-bg' },

@@ -1,17 +1,17 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type APIRequestContext } from '@playwright/test'
 import { API_KEY_HEADER, createTestAgent, deleteTestAgent } from './helpers'
 
 test.describe('Agent Attribution API', () => {
   const cleanup: number[] = []
 
-  test.afterEach(async ({ request }) => {
+  test.afterEach(async ({ request }: { request: APIRequestContext }) => {
     for (const id of cleanup) {
       await deleteTestAgent(request, id).catch(() => {})
     }
     cleanup.length = 0
   })
 
-  test('allows self-scope access using x-agent-name attribution header', async ({ request }) => {
+  test('allows self-scope access using x-agent-name attribution header', async ({ request }: { request: APIRequestContext }) => {
     const { id, name } = await createTestAgent(request)
     cleanup.push(id)
 
@@ -24,7 +24,7 @@ test.describe('Agent Attribution API', () => {
     expect(body.access_scope).toBe('self')
   })
 
-  test('denies cross-agent attribution access by default', async ({ request }) => {
+  test('denies cross-agent attribution access by default', async ({ request }: { request: APIRequestContext }) => {
     const primary = await createTestAgent(request)
     const other = await createTestAgent(request)
     cleanup.push(primary.id, other.id)
@@ -36,7 +36,7 @@ test.describe('Agent Attribution API', () => {
     expect(res.status()).toBe(403)
   })
 
-  test('allows privileged override for admin caller', async ({ request }) => {
+  test('allows privileged override for admin caller', async ({ request }: { request: APIRequestContext }) => {
     const primary = await createTestAgent(request)
     const other = await createTestAgent(request)
     cleanup.push(primary.id, other.id)
@@ -49,7 +49,7 @@ test.describe('Agent Attribution API', () => {
     expect(body.access_scope).toBe('privileged')
   })
 
-  test('validates section parameter and timeframe hours', async ({ request }) => {
+  test('validates section parameter and timeframe hours', async ({ request }: { request: APIRequestContext }) => {
     const { id, name } = await createTestAgent(request)
     cleanup.push(id)
 

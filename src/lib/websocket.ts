@@ -270,7 +270,7 @@ export function useWebSocket() {
         maxProtocol: PROTOCOL_VERSION,
         client: {
           id: clientId,
-          displayName: 'Mission Control',
+          displayName: 'Arvis',
           version: APP_VERSION,
           platform: 'web',
           mode: clientMode,

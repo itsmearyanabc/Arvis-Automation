@@ -71,8 +71,62 @@ services:
       - PORT=${PORT:-3000}
       - NEXT_PUBLIC_GATEWAY_OPTIONAL=true
 
+  # ── Phase A: Automation Panel Components ──
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
+      POSTGRES_DB: ${POSTGRES_DB:-n8n}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mc-net
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n_engine
+    restart: always
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-n8n}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-postgres}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-postgres_password}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin}
+      - N8N_LICENSE_KEY=${N8N_LICENSE_KEY:-}
+    ports:
+      - "5678:5678"
+    depends_on:
+      - postgres
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - mc-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: python_backend
+    restart: always
+    environment:
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    networks:
+      - mc-net
+
 volumes:
   mc-data:
+  postgres_data:
+  n8n_data:
 
 networks:
   mc-net:
