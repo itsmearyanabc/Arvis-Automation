@@ -1,0 +1,72 @@
+services:
+  # 1. The Arvis Next.js Dashboard
+  - type: web
+    name: arvis-dashboard
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NEXT_PUBLIC_GATEWAY_OPTIONAL
+        value: "true"
+
+  # 2. Python Data Backend
+  - type: web
+    name: arvis-backend
+    env: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    plan: starter
+    envVars:
+      - key: PORT
+        value: 8000
+
+  # 3. n8n Automation Engine
+  - type: web
+    name: arvis-n8n
+    env: image
+    image: docker.n8n.io/n8nio/n8n:latest
+    plan: standard
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 5
+    envVars:
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: arvis-db
+          property: host
+      - key: DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: arvis-db
+          property: port
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: arvis-db
+          property: database
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: arvis-db
+          property: user
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: arvis-db
+          property: password
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        generateValue: true
+      - key: N8N_LICENSE_KEY
+        value: 8498eb5b-5b08-4f94-ab19-c7721c61785d
+
+databases:
+  # Managed PostgreSQL Database for n8n
+  - name: arvis-db
+    databaseName: n8n_db
+    user: n8n_user
+    plan: starter
